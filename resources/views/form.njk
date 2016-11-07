@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+
+    {% block form %}
+      <div class="section">
+        <div class="container">
+          <form action="/" class="panel" method="POST">
+            {{csrfField}}
+            <p class="panel-heading">Sign up for My Web App</p>
+
+            <div class="panel-block">
+              {% for item in formInputs %}
+                <p class="control has-icon">
+                  {% if item.type === 'select' %}
+                    <span class="select is-fullwidth">
+                      <select name="{{ item.id }}">
+                        {% for option in item.options %}
+                          <option>{{ option.label }}</option>
+                        {% endfor %}
+                      </select>
+                    </span>
+                  {% else %}
+                    {% if item.type === 'textarea' %}
+                      <textarea name="{{ item.id }}" class="input textarea" placeholder="{{ item.label }}"></textarea>
+                      <i class="fa {{ item.icon }}" aria-hidden="true"></i>
+                    {% else %}
+                      <input class="input" type="text" name="name" placeholder="{{ item.label }}">
+                      <i class="fa {{ item.icon }}" aria-hidden="true"></i>
+                    {% endif %}
+                  {% endif %}
+                </p>
+              {% endfor %}
+            </div>
+            <div class="panel-block">
+              <button class="button is-primary is-fullwidth">SUBMIT</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    {% endblock %}
+  </body>
+</html>

@@ -18,4 +18,9 @@
 const Route = use('Route');
 const fetch = require('node-fetch');
 
-Route.on('/').render('welcome')
+Route.get('/', function * (request, response) {
+
+  const apiUrl = yield fetch('http://json-data.herokuapp.com/forms');
+  const formInputs = yield apiUrl.json();
+  yield response.sendView('form', {formInputs})
+});
